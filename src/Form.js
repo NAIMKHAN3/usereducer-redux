@@ -13,25 +13,27 @@ const Form = () => {
         term: false,
     };
     const reducer = (state, action) => {
+        console.log(state)
+        console.log(action)
         switch (action.type) {
             case "INPUT":
                 return {
                     ...state,
-                    [action.payload.name]: action.payload.value,
-                };
+                    [action.payload.name]: action.payload.value
+                }
             case "TOGGLE":
                 return {
                     ...state,
-                    term: !state.term,
-                };
-            default:
-                return state;
+                    term: !state.term
+                }
+            default: return state
         }
 
     }
     const [state, dispatch] = useReducer(reducer, initialState)
     const submit = (e) => {
         e.preventDefault()
+        console.log(state)
     }
     return (
         <div className='h-screen w-screen flex justify-center items-center overflow-auto'>
@@ -48,6 +50,7 @@ const Form = () => {
                         name='firstName'
                         id='firstName'
                         className='input input-bordered'
+                        onBlur={(e) => dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value } })}
                     />
                 </div>
                 <div className='flex flex-col w-full max-w-xs'>
@@ -59,6 +62,7 @@ const Form = () => {
                         name='lastName'
                         id='lastName'
                         className='input input-bordered'
+                        onBlur={(e) => dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value } })}
                     />
                 </div>
                 <div className='flex flex-col w-full max-w-xs'>
@@ -70,6 +74,7 @@ const Form = () => {
                         name='email'
                         id='email'
                         className='input input-bordered'
+                        onBlur={(e) => dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value } })}
                     />
                 </div>
                 <div className='flex flex-col w-full max-w-xs'>
@@ -81,7 +86,7 @@ const Form = () => {
                                 id='male'
                                 name='gender'
                                 value='male'
-
+                                onClick={(e) => dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value } })}
                             />
                             <label className='ml-2 text-lg' for='male'>
                                 Male
@@ -93,7 +98,7 @@ const Form = () => {
                                 id='female'
                                 name='gender'
                                 value='female'
-
+                                onClick={(e) => dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value } })}
                             />
                             <label className='ml-2 text-lg' for='female'>
                                 Female
@@ -105,7 +110,7 @@ const Form = () => {
                                 id='other'
                                 name='gender'
                                 value='other'
-
+                                onClick={(e) => dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value } })}
                             />
                             <label className='ml-2 text-lg' for='other'>
                                 Other
@@ -121,6 +126,7 @@ const Form = () => {
                         name='education'
                         id='education'
                         className='input input-bordered'
+                        onBlur={(e) => dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value } })}
                     >
                         <option value='SSC'>SSC</option>
                         <option value='HSC'>HSC</option>
@@ -152,6 +158,7 @@ const Form = () => {
                         cols='30'
                         rows='4'
                         className='input input-bordered'
+                        onBlur={(e) => dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value } })}
                     ></textarea>
                 </div>
 
@@ -162,14 +169,14 @@ const Form = () => {
                             type='checkbox'
                             name='term'
                             id='terms'
-
+                            onClick={() => dispatch({ type: "TOGGLE" })}
                         />
                         <label for='terms'>I agree to terms and conditions</label>
                     </div>
                     <button
                         className=' px-4 py-3 bg-indigo-500 rounded-md font-semibold text-white text-lg disabled:bg-gray-500'
                         type='submit'
-
+                        disabled={!state.term}
                     >
                         Submit
                     </button>
