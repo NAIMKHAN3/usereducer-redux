@@ -3,6 +3,7 @@ import './App.css';
 import Home from './Home';
 import Perent from './Perent';
 import { createContext, useReducer } from 'react';
+import Form from './Form';
 
 
 export const UserContext = createContext();
@@ -26,9 +27,10 @@ function App() {
   return (
 
     <UserContext.Provider value={{ state, dispatch }}>
-      <div className="App">
+      <div className="">
         <Home></Home>
         <Perent></Perent>
+        <Form></Form>
       </div>
     </UserContext.Provider>
 
