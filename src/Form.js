@@ -1,35 +1,9 @@
 import React, { useReducer } from 'react';
+import { initialState, reducer } from './ProductReducer';
 
 const Form = () => {
 
-    const initialState = {
-        firstName: "",
-        lastName: "",
-        email: "",
-        gender: "",
-        education: "",
-        quantity: 0,
-        feedback: "",
-        term: false,
-    };
-    const reducer = (state, action) => {
-        console.log(state)
-        console.log(action)
-        switch (action.type) {
-            case "INPUT":
-                return {
-                    ...state,
-                    [action.payload.name]: action.payload.value
-                }
-            case "TOGGLE":
-                return {
-                    ...state,
-                    term: !state.term
-                }
-            default: return state
-        }
 
-    }
     const [state, dispatch] = useReducer(reducer, initialState)
     const submit = (e) => {
         e.preventDefault()
@@ -128,6 +102,7 @@ const Form = () => {
                         className='input input-bordered'
                         onBlur={(e) => dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value } })}
                     >
+                        <option value='Secect'>Select</option>
                         <option value='SSC'>SSC</option>
                         <option value='HSC'>HSC</option>
                         <option value='underGrad'>Under Graduate</option>
@@ -137,13 +112,15 @@ const Form = () => {
                 <div className='flex flex-col w-full max-w-xs'>
                     <label className='mb-3'>Number of PCs</label>
                     <div className='flex justify-between items-center gap-2 '>
-                        <button className='bg-indigo-500 text-lg text-white rounded h-10 w-10 '>
+                        <button className='bg-indigo-500 text-lg text-white rounded h-10 w-10 ' name='quantity'
+                            onClick={(e) => dispatch({ type: "DECREMENT", payload: { name: e.target.name, value: state.quantity - 1 } })}>
                             -
                         </button>
                         <div className='border flex-1 flex justify-center items-center h-10 rounded-md border-gray-300'>
-                            <span className='text-lg'>0</span>
+                            <span className='text-lg'>{state.quantity}</span>
                         </div>
-                        <button className='bg-indigo-500 text-lg text-white rounded h-10 w-10'>
+                        <button className='bg-indigo-500 text-lg text-white rounded h-10 w-10' name='quantity'
+                            onClick={(e) => dispatch({ type: "INCREMENT", payload: { name: e.target.name, value: state.quantity + 1 } })}>
                             +
                         </button>
                     </div>
